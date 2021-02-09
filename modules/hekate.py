@@ -10,6 +10,8 @@ config = {
     "assetRegex": ".*hekate.*\\.zip"
 }
 
+
+
 def overridePayload(extracted):
     folder = extracted
     entrys = os.listdir(folder)
