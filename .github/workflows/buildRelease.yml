@@ -11,16 +11,16 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2
-      
+    
     - id: set-version
       run: |
         version=$(cat ./VERSION | python -c 'import sys, json; f=open("./VERSION");print(json.loads(f.read())["buildVersion"])')
         echo "::set-output name=version::$version"
         
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v1
+    - name: Python setup
+      uses: actions/setup-python@v2
       with:
-        python-version: 3.9.1
+        python-version: '3.x'
 
     - name: Install dependencies
       run: |
