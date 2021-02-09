@@ -34,7 +34,7 @@ jobs:
 
     - name: Create changelog
       run: |
-        echo "GIT_RELEASE_NOTES="$(git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h %s %n")"" >> $GITHUB_ENV
+        echo "GIT_RELEASE_NOTES="$(git log --pretty=format:- %s `git tag --sort=-committerdate | head -1`...`git tag --sort=-committerdate | head -2 | awk '{split($0, tags, "\n")} END {print tags[1]}'`)"" >> $GITHUB_ENV
 
     - name: Create Release
       run: |
