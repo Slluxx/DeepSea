@@ -32,6 +32,10 @@ jobs:
       run: | 
         python ./autobuild.py -gt="$GITHUB_TOKEN"
 
+    - name: Create changelog
+      run: |
+        echo "GIT_RELEASE_NOTES="$(git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h %s %n\n")"" >> $GITHUB_ENV
+
     - name: Create Release
       run: |
         set -x
@@ -39,6 +43,6 @@ jobs:
         for asset in ./*.zip; do
           assets+=("-a" "$asset")
         done
-        hub release create "${assets[@]}" -d -m "Release v${{ steps.set-version.outputs.version }}" "v${{ steps.set-version.outputs.version }}"
+        hub release create "${assets[@]}" -d -m "Release v${{ steps.set-version.outputs.version }}\n\n ${{ env.GIT_RELEASE_NOTES }}" "v${{ steps.set-version.outputs.version }}"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
