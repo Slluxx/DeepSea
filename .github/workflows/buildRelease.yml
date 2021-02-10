@@ -38,15 +38,10 @@ jobs:
       with:
         myToken: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Create Release
-      run: |
-        set -x
-        assets=()
-        for asset in ./*.zip; do
-          assets+=("-a" "$asset")
-        done
-        hub release create "${assets[@]}" -d -m "Release v${{ steps.set-version.outputs.version }}
-        
-        ${{ steps.changelog.outputs.changelog }}" "v${{ steps.set-version.outputs.version }}"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - uses: ncipollo/release-action@v1
+      with:
+        artifacts: "./*zip"
+        name: "Release v${{ steps.set-version.outputs.version }}"
+        body: "${{ steps.changelog.outputs.changelog }}"
+        tag: "v${{ steps.set-version.outputs.version }}"
+        token: ${{ secrets.GITHUB_TOKEN }}
