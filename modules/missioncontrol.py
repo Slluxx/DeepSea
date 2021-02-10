@@ -8,7 +8,6 @@ config = {
     "assetRegex": ".*MissionControl.*\\.zip"
 }
 
-
 class Missioncontrol(Basemodule):
     def __init__(self, config):
         Basemodule.__init__(self, config)
