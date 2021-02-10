@@ -8,7 +8,6 @@ config = {
     "assetRegex": ".*emuiibo.*\\.zip"
 }
 
-
 class Emuiibo(Basemodule):
     def __init__(self, config):
         Basemodule.__init__(self, config)
